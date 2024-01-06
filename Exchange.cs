@@ -5,6 +5,7 @@
         private ExchangePricePublisher PricePublisher { get; set; }
         public bool ExchangeIsOpen { get; private set; }
         public decimal StockPrice { get; private set; }
+        public readonly decimal TransactionFee = 1m;
         public Exchange(decimal startingPrice)
         {
             StockPrice = startingPrice;
@@ -33,7 +34,7 @@
                     await PricePublisher.SendInteraction(StockPrice, priceIncreased);
                     lastPrice = StockPrice;
 
-                    //await Task.Delay(1000);
+                    await Task.Delay(100);
                 }
             });
         }

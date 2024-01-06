@@ -11,8 +11,8 @@ namespace SimpleStockMarketSimulation
             Console.OutputEncoding = Encoding.UTF8;
 
             // Initialisierung der Börse und des Kontos
-            Exchange exchange = new Exchange(50); // Startpreis von 1000 Euro
-            Account account = new Account(200, exchange); // Startguthaben von 10000 Euro
+            Exchange exchange = new Exchange(100); // Startpreis von 100 Euro
+            Account account = new Account(1000, exchange); // Startguthaben von 110 Euro
 
             // Öffnen der Börse
             exchange.OpenExchange();
@@ -20,10 +20,15 @@ namespace SimpleStockMarketSimulation
             // Erstellen und Starten der Handelsstrategie
             TradingStrategy myStrategy = new SmithStrat(account, exchange);
 
-            // Optionale Konsolenausgabe für Preisänderungen (kann entfernt werden)
+            // Optionale Konsolenausgabe für Preisänderungen
             exchange.GetPricePublisher().InteractionReceived += (sender, price, priceIncreased) =>
             {
+                //if (priceIncreased)
+                //    Console.ForegroundColor = ConsoleColor.Green;
+                //else
+                //    Console.ForegroundColor = ConsoleColor.Red;
                 //Console.WriteLine($"Aktueller Preis: {Math.Round(price, 2)}€, Preis gestiegen: {priceIncreased}");
+                //Console.ResetColor();
             };
 
             Console.ReadKey();
