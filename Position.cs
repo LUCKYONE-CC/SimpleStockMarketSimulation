@@ -1,4 +1,6 @@
-﻿namespace SimpleStockMarketSimulation
+﻿using System.Security.Principal;
+
+namespace SimpleStockMarketSimulation
 {
     public class Position
     {
@@ -11,14 +13,21 @@
         public decimal StopLoss { get; private set; }
         public bool Closed { get; private set; } = false;
         public decimal Profit { get; private set; }
-        public Position(Account account, decimal investedMoney, int leverage, decimal stopLoss = 0)
+        public Position(Account account, decimal investedMoney, int leverage = 0, decimal stopLoss = 0)
         {
             PositionId = Id;
             Id++;
             InvestedMoney = investedMoney;
             Leverage = leverage;
-            Shares = investedMoney * leverage / account.Exchange.StockPrice;
+
             account.ChangeBalance(investedMoney + account.Exchange.TransactionFee, false);
+
+            if (leverage > 0)
+            {
+                investedMoney *= leverage;
+            }
+
+            Shares = investedMoney / account.Exchange.StockPrice;
             FromAccount = account;
             StopLoss = stopLoss;
 
@@ -28,27 +37,27 @@
             }
         }
 
-        public void Sell(Account account, bool fromStopLoss = false)
+        public void Sell(Account account)
         {
-            decimal borrowedMoney = Leverage * InvestedMoney;
-            decimal currentValue;
-
-            currentValue = Shares * account.Exchange.StockPrice;
-
-            if (fromStopLoss)
+            if (Closed)
             {
-                currentValue = Shares * StopLoss;
+                throw new InvalidOperationException("Cannot sell a closed position.");
             }
 
-            decimal profit = (currentValue - borrowedMoney) - account.Exchange.TransactionFee;
+            decimal currentStockPrice = account.Exchange.StockPrice;
+            decimal saleAmount = Shares * currentStockPrice;
 
-            Profit = profit;
+            // Berechnen des Gewinns oder Verlusts
+            decimal initialAmount = InvestedMoney * (Leverage > 0 ? Leverage : 1);
+            Profit = saleAmount - initialAmount;
 
-            account.ChangeBalance(InvestedMoney, true);
-            account.ChangeBalance(profit, true);
+            // Aktualisieren des Kontosaldos
+            account.ChangeBalance((Profit + InvestedMoney) - account.Exchange.TransactionFee, true);
+
+            // Schließen der Position
             Close();
 
-            Console.WriteLine($"Position {PositionId} closed with profit of {profit}€");
+            //Console.WriteLine($"Position {PositionId} closed with profit of {Math.Round(Profit, 2)}€");
         }
         private void Close()
         {
@@ -66,7 +75,7 @@
 
             if (currentPrice <= StopLoss)
             {
-                Sell(FromAccount, true);
+                Sell(FromAccount);
             }
         }
     }

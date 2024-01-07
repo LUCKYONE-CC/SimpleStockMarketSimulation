@@ -20,7 +20,7 @@
             {
                 initialPrice = currentPrice;
                 decimal stopLoss = currentPrice;
-                Account.Buy(new Order(100 - (Account.Exchange.TransactionFee * 2), stopLoss, leverage));
+                Account.Buy(new Order(1000 - (Account.Exchange.TransactionFee * 2), stopLoss, leverage));
             }
             else
             {

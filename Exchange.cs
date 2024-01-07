@@ -34,7 +34,7 @@
                     await PricePublisher.SendInteraction(StockPrice, priceIncreased);
                     lastPrice = StockPrice;
 
-                    await Task.Delay(100);
+                    //await Task.Delay(1000);
                 }
             });
         }

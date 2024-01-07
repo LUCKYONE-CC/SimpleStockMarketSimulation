@@ -22,6 +22,7 @@
 
             Position position = new Position(this, order.Euro, order.Leverage, order.StopLoss);
             Positions.Add(position);
+            //Console.WriteLine($"Position {position.PositionId} opened with {order.Euro}€");
         }
 
         public void ChangeBalance(decimal amount, bool income)
