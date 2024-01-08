@@ -1,6 +1,6 @@
 # Simple Stock Market Simulation
 
-This project is a simple stock market simulation written in C#. It includes classes for managing an account, an exchange, orders, positions, and a trading strategy. The project simulates a stock exchange with random price fluctuations and allows users to create and manage trading positions. (GBM-Model)
+This project is a simple stock market simulation written in C#. It includes classes for managing an account, an exchange, orders, positions, and a trading strategies. The project simulates a stock exchange with random price fluctuations and allows users to create and manage trading positions. (GBM-Model)
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ This project is a simple stock market simulation written in C#. It includes clas
 - Simulates a stock exchange with random price fluctuations.
 - Allows users to create and manage trading positions.
 - Supports buying and selling of stocks.
-- Implements a basic trading strategy (can be extended).
+- You can implement your own trading strategy
 
 ## Usage
 
