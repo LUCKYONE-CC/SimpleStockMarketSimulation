@@ -17,16 +17,15 @@
             Task.Run(async () =>
             {
                 decimal lastPrice = StockPrice;
-                decimal drift = 0.0001m; // Erwarteter Ertrag der Aktie
-                decimal volatility = 0.01m; // Volatilität der Aktie
+                decimal drift = 0.0001m;
+                decimal volatility = 0.01m;
                 Random random = new Random();
 
                 while (ExchangeIsOpen)
                 {
-                    // Zufällige Änderung, basierend auf der Normalverteilung
                     double randomFactor = Math.Sqrt(-2.0 * Math.Log(random.NextDouble())) * Math.Sin(2.0 * Math.PI * random.NextDouble());
 
-                    // Aktualisieren des Aktienkurses gemäß dem GBM-Modell
+                    // GBM-Modell
                     decimal changePercent = drift + volatility * (decimal)randomFactor;
                     StockPrice *= 1 + changePercent;
 

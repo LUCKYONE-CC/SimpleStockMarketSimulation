@@ -10,7 +10,6 @@
             Account = account;
             Exchange = exchange;
 
-            // Registrierung des Event-Handlers für Preisänderungen
             Exchange.GetPricePublisher().InteractionReceived += EvaluateMarketChanges;
         }
         protected abstract void EvaluateMarketChanges(object sender, decimal currentPrice, bool priceIncreased);
@@ -22,10 +21,10 @@
 
             decimal averageProfitPerTrade = totalTrades > 0 ? totalProfit / totalTrades : 0;
 
-            Console.WriteLine($"Gesamtanzahl der Trades: {totalTrades}");
-            Console.WriteLine($"Gesamtgewinn/verlust: {Math.Round(totalProfit, 2)}€");
-            Console.WriteLine($"Durchschnittlicher Gewinn/Verlust pro Trade: {Math.Round(averageProfitPerTrade, 2)}€");
-            Console.WriteLine($"Account-Balance: {Math.Round(Account.Balance, 2)}€");
+            Console.WriteLine($"Total number of trades: {totalTrades}");
+            Console.WriteLine($"Total profit/loss: {Math.Round(totalProfit, 2)}€");
+            Console.WriteLine($"Average profit/loss per trade: {Math.Round(averageProfitPerTrade, 2)}€");
+            Console.WriteLine($"Account balance: {Math.Round(Account.Balance, 2)}€");
         }
     }
 }

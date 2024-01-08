@@ -1,6 +1,4 @@
-﻿using System.Security.Principal;
-
-namespace SimpleStockMarketSimulation
+﻿namespace SimpleStockMarketSimulation
 {
     public class Position
     {
@@ -47,14 +45,11 @@ namespace SimpleStockMarketSimulation
             decimal currentStockPrice = account.Exchange.StockPrice;
             decimal saleAmount = Shares * currentStockPrice;
 
-            // Berechnen des Gewinns oder Verlusts
             decimal initialAmount = InvestedMoney * (Leverage > 0 ? Leverage : 1);
             Profit = saleAmount - initialAmount;
 
-            // Aktualisieren des Kontosaldos
             account.ChangeBalance((Profit + InvestedMoney) - account.Exchange.TransactionFee, true);
 
-            // Schließen der Position
             Close();
 
             //Console.WriteLine($"Position {PositionId} closed with profit of {Math.Round(Profit, 2)}€");
